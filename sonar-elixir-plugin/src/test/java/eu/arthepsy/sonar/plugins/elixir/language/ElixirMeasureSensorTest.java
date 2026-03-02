@@ -40,7 +40,7 @@ import org.sonar.api.resources.Project;
 import java.io.File;
 import java.io.IOException;
 
-import static org.fest.assertions.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
 public class ElixirMeasureSensorTest {
@@ -57,8 +57,9 @@ public class ElixirMeasureSensorTest {
     @Before
     public void prepare() throws IOException {
         baseDir = temp.newFolder();
-        fileSystem = new DefaultFileSystem();
-        fileSystem.setBaseDir(baseDir);
+        // DefaultFileSystem no longer has a no-arg ctor in recent API versions.
+        // use the filesystem constructor that takes the base directory directly
+        fileSystem = new DefaultFileSystem(baseDir);
         sensor = new ElixirMeasureSensor(fileSystem);
     }
 
@@ -67,8 +68,10 @@ public class ElixirMeasureSensorTest {
         String fileName = "test_doc.ex";
         File source = new File(baseDir, fileName);
         FileUtils.write(source, IOUtils.toString(getClass().getResourceAsStream("/" + fileName)));
-        DefaultInputFile inputFile = new DefaultInputFile(fileName).setLanguage(Elixir.KEY);
-        inputFile.setAbsolutePath(new File(baseDir, inputFile.relativePath()).getAbsolutePath());
+        // constructor now requires moduleKey and relativePath
+        DefaultInputFile inputFile = new DefaultInputFile(project.getKey(), fileName)
+                .setLanguage(Elixir.KEY)
+                .setModuleBaseDir(baseDir.toPath());
         fileSystem.add(inputFile);
 
         assertThat(sensor.shouldExecuteOnProject(project)).isTrue();

@@ -25,11 +25,10 @@ package eu.arthepsy.sonar.plugins.elixir.rule;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.Mockito;
 import org.sonar.api.profiles.RulesProfile;
 import org.sonar.api.utils.ValidationMessages;
 
-import static org.fest.assertions.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class ElixirQualityProfileTest {
     private ElixirQualityProfile profile;
@@ -37,7 +36,7 @@ public class ElixirQualityProfileTest {
 
     @Before
     public void prepare() {
-        profile = Mockito.spy(new ElixirQualityProfile());
+        profile = new ElixirQualityProfile();
         validationMessages = ValidationMessages.create();
     }
 

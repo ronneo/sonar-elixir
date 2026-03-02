@@ -11,3 +11,5 @@ target/
 .project
 .settings
 
+# file system
+.DS_Store

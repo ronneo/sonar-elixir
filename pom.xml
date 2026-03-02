@@ -51,7 +51,7 @@
         <dev.nick>arthepsy</dev.nick>
         <dev.name>Andris Raugulis</dev.name>
         <dev.mail>moo@arthepsy.eu</dev.mail>
-        <sonar.version>4.5</sonar.version>
+        <sonar.version>5.1</sonar.version>
         <maven.buildNumber.timestampFormat>{0,date,yyyy-MM-dd HH:mm:ssa}</maven.buildNumber.timestampFormat>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
@@ -79,8 +79,14 @@
             </dependency>
             <dependency>
                 <groupId>org.mockito</groupId>
-                <artifactId>mockito-all</artifactId>
-                <version>1.10.19</version>
+                <artifactId>mockito-core</artifactId>
+                <version>5.7.0</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.assertj</groupId>
+                <artifactId>assertj-core</artifactId>
+                <version>3.24.2</version>
                 <scope>test</scope>
             </dependency>
         </dependencies>
@@ -92,8 +98,10 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-compiler-plugin</artifactId>
-                    <version>3.3</version>
+                    <version>3.15.0</version>
                     <configuration>
+                        <source>21</source>
+                        <target>21</target>
                         <compilerArgs>
                             <arg>-Xlint:unchecked</arg>
                             <arg>-Xlint:deprecation</arg>
@@ -104,9 +112,14 @@
         </pluginManagement>
         <plugins>
             <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>3.5.4</version>
+            </plugin>
+            <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
-                <version>0.7.5.201505241946</version>
+                <version>0.8.12</version>
                 <executions>
                     <execution>
                         <id>prepare-agent</id>
